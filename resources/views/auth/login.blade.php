@@ -33,9 +33,9 @@
                                     <form class="form-horizontal mt-4" method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="username">Email/Nombor Telefon/Nombor IC</label>
+                                            <label for="username">Email/Nombor IC</label>
                                             <input name="email" type="text" class="form-control @error('email') is-invalid @enderror" @if(old('email')) value="{{ old('email') }}" @else value="" @endif
-                                                id="username" placeholder="Masukkan Email/Nombor Telefon/Nombor IC" autocomplete="email" autofocus>
+                                                id="username" placeholder="Masukkan Email/Nombor IC" autocomplete="email" autofocus>
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -48,7 +48,7 @@
                                             <div class="input-group">
                                                 <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" value=""
                                                     placeholder="Masukkan Kata Laluan">
-                                                <button class="btn btn-outline-primary" id="show-password-btn">
+                                                <button class="btn btn-outline-primary" id="show-password-btn" type="button">
                                                     <i class="fas fa-eye-slash"></i>
                                                 </button>
                                             </div>

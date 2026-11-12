@@ -44,7 +44,12 @@
 
                                     <div class="form-group">
                                         <label for="userpassword">Kata Laluan</label>
-                                        <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" value="" placeholder="Masukkan Kata Laluan">
+                                        <div class="input-group">
+                                            <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" value="" placeholder="Masukkan Kata Laluan">
+                                            <button class="btn btn-outline-primary" id="show-password-btn" type="button">
+                                                <i class="fas fa-eye-slash"></i>
+                                            </button>
+                                        </div>
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -110,11 +115,22 @@
 @endsection
 
 @section('script')
-<!-- <script src="{{ URL::asset('assets/libs/jquery-mask/jquery.mask.min.js')}}"></script>
+<!-- <script src="{{ URL::asset('assets/libs/jquery-mask/jquery.mask.min.js')}}"></script> -->
 
 <script>
     $(document).ready(function () {
-        $('#username').mask('+600000000000');
+        $("#show-password-btn").click(function (e) {
+            e.preventDefault();
+            let passwordInput = $('#userpassword');
+
+            if (passwordInput.prop('type') == 'password') {
+                passwordInput.prop('type', 'text');
+            } else {
+                passwordInput.prop('type', 'password');
+            }
+
+            $(this).find('i').toggleClass('fa-eye-slash').toggleClass('fa-eye');
+        });
     });
-</script> -->
+</script>
 @endsection
