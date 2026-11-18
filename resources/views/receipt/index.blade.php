@@ -155,7 +155,26 @@
 @endsection
 
 @section('content')
-    <div>You are being redirected to our homepage in <span id="time">5</span> seconds</div>
+    <div class="text-center">You are being redirected to our homepage in <span id="time">10</span> seconds</div>
+    <div class="mt-3 mx-auto px-5 py-3 bg-dark text-light" style="width: fit-content; border-radius: 10px;">
+        <div class="text-center" style="font-size: medium;">
+            <div class="my-2">
+                Untuk memudahkan kita sedekah, sila muat turun apps.
+                <img width="30" src="{{ URL::asset('assets/landing-page/img/sedekahsubuh_logo.png') }}">
+            </div>
+            <div class="my-2">
+                Untuk telefon pintar ANDROID, sila klik link
+                <a href="https://play.google.com/store/apps/details?id=com.prim.prim_derma_app">https://play.google.com/store/apps/details?id=com.prim.prim_derma_app</a>.
+            </div>
+            <div class="my-2">
+                Untuk telefon pintar IOS, sila klik link
+                <a href="https://apps.apple.com/my/app/sedekah-subuh/id6760802064">https://apps.apple.com/my/app/sedekah-subuh/id6760802064</a>.
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <a href="/derma" class="btn btn-secondary">Kembali ke Halaman Derma</a>
+        </div>
+    </div>
 
     <table class="body-wrap">
         <tbody>
@@ -220,20 +239,6 @@
                                                                         </table>
                                                                     </td>
                                                                 </tr>
-                                                                <tr class="text-center">
-                                                                    <td class="ml-auto">
-                                                                        <a href="https://play.google.com/store/apps/details?id=com.prim.prim_derma_app&pcampaignid=web_share" target="_blank"
-                                                                            class="badge border bg-black">
-                                                                            <i class="fab fa-google-play fa-lg"></i>
-                                                                            PlayStore
-                                                                        </a>
-
-                                                                        <a href="https://apps.apple.com/my/app/sedekah-subuh/id6760802064" target="_blank" class="badge border bg-black">
-                                                                            <i class="fab fa-app-store fa-lg"></i>
-                                                                            AppStore
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </td>
@@ -254,7 +259,7 @@
 
 @section('script')
     <script>
-        var count = 5;
+        var count = 10;
         setInterval(function () {
             count--;
             document.getElementById('time').innerHTML = count;
