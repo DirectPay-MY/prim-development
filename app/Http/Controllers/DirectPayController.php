@@ -1859,7 +1859,7 @@ class DirectPayController extends Controller
             $organ = DB::table('transactions as t')
                 ->leftJoin('transaction_competition as tc', 'tc.transactionId', 't.id')
                 ->leftJoin('competition_registration as cr', 'cr.id', 'tc.registerId')
-                ->leftJoin('competition as c', 'c.id', 'cr.competitionId')
+                ->leftJoin('competitions as c', 'c.id', 'cr.competitionId')
                 ->leftJoin('organizations as o', 'o.id', 'c.organizationId')
                 ->where('t.id', $transaction->id)
                 ->select('o.private_key')
