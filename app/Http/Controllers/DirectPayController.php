@@ -120,7 +120,8 @@ class DirectPayController extends Controller
                 $user = User::find(Auth::id());
                 $registrationId = $request->input('selectPayById', []);
                 $registration = CompetitionRegistration::with(['competition.organization', 'team.participant'])->whereIn('id', $registrationId)->get();
-                if ($registration->isEmpty()) return;
+                if ($registration->isEmpty())
+                    return;
                 $organization = $registration->first()->competition->organization;
 
                 $fpx_buyerEmail = $user->email;
@@ -138,18 +139,18 @@ class DirectPayController extends Controller
 
                 $fpx_sellerOrderNo = "COMP" . date('YmdHis') . str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
                 $private_key = $organization->private_key;
-                
+
                 $fpx_txnAmount = 0;
 
-                foreach($registration as $register) {
+                foreach ($registration as $register) {
                     $participant = $register->team->participant;
                     $competition = $register->competition;
 
-                    foreach($participant as $participants) {
+                    foreach ($participant as $participants) {
                         $filterByIC = preg_replace(
-                        '/[^0-9]/',
-                        '',
-                        $participants->icNo ?? ''
+                            '/[^0-9]/',
+                            '',
+                            $participants->icNo ?? ''
                         );
 
                         $ICFormat = (strlen($filterByIC) === 12);
@@ -161,7 +162,7 @@ class DirectPayController extends Controller
                         }
                     }
                 }
-                    
+
                 $fixedCharge = $competition->organization->fixed_charges ?? 0;
                 $fpx_txnAmount += $fixedCharge;
 
@@ -398,7 +399,8 @@ class DirectPayController extends Controller
 
 
             $fpx_sellerTxnTime = date('YmdHis');
-            if ($request->desc != 'Competition') $fpx_txnAmount = $request->amount;
+            if ($request->desc != 'Competition')
+                $fpx_txnAmount = $request->amount;
 
 
             $transaction = new Transaction();
@@ -687,7 +689,8 @@ class DirectPayController extends Controller
                 $user = User::find(Auth::id());
                 $registrationId = $request->input('selectPayById', []);
                 $registration = CompetitionRegistration::with(['competition.organization', 'team.participant'])->whereIn('id', $registrationId)->get();
-                if ($registration->isEmpty()) return;
+                if ($registration->isEmpty())
+                    return;
                 $organization = $registration->first()->competition->organization;
 
                 $fpx_buyerEmail = $user->email;
@@ -705,18 +708,18 @@ class DirectPayController extends Controller
 
                 $fpx_sellerOrderNo = "COMP" . date('YmdHis') . str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
                 $private_key = $organization->private_key;
-                
+
                 $fpx_txnAmount = 0;
 
-                foreach($registration as $register) {
+                foreach ($registration as $register) {
                     $participant = $register->team->participant;
                     $competition = $register->competition;
 
-                    foreach($participant as $participants) {
+                    foreach ($participant as $participants) {
                         $filterByIC = preg_replace(
-                        '/[^0-9]/',
-                        '',
-                        $participants->icNo ?? ''
+                            '/[^0-9]/',
+                            '',
+                            $participants->icNo ?? ''
                         );
 
                         $ICFormat = (strlen($filterByIC) === 12);
@@ -979,7 +982,8 @@ class DirectPayController extends Controller
 
 
             $fpx_sellerTxnTime = date('YmdHis');
-            if ($request->desc != 'Competition') $fpx_txnAmount = $request->amount;
+            if ($request->desc != 'Competition')
+                $fpx_txnAmount = $request->amount;
 
 
             $transaction = new Transaction();
@@ -1851,6 +1855,15 @@ class DirectPayController extends Controller
             $organ = Organization::find($orders->organ_id);
         } else if ($fpx_productDesc == "Request") {
             $organ = Organization::find(168);
+        } else if ($fpx_productDesc == "Comp") {
+            $organ = DB::table('transactions as t')
+                ->leftJoin('transaction_competition as tc', 'tc.transactionId', 't.id')
+                ->leftJoin('competition_registration as cr', 'cr.id', 'tc.registerId')
+                ->leftJoin('competition as c', 'c.id', 'cr.competitionId')
+                ->leftJoin('organizations as o', 'o.id', 'c.organizationId')
+                ->where('t.id', $transaction->id)
+                ->select('o.private_key')
+                ->first();
         }
         if ($organ == null) {
             return null;
@@ -1971,7 +1984,7 @@ class DirectPayController extends Controller
         switch ($fpx_productDescCode) {
             case 'C':
                 $registerId = $transaction->competitionRegistration()->pluck('competition_registration.id')->toArray();
-                
+
                 DB::table('competition_registration')
                     ->whereIn('id', $registerId)
                     ->update(['statusPayment' => 'Paid']);
@@ -1990,12 +2003,11 @@ class DirectPayController extends Controller
                 $get_transaction = $transaction;
 
                 Mail::to($transaction->email)->send(new CompetitionReceipt($get_participant_to_organization, $get_transaction, $transaction, $loginUser));
-                
-                if ($returnView)
-                {
+
+                if ($returnView) {
                     return view('competition.receipt', compact('get_participant_to_organization', 'get_transaction', 'loginUser'));
                 }
-                
+
                 break;
 
             case 'S':
