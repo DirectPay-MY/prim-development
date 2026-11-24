@@ -27,7 +27,7 @@
             </ul>
         </div>
         @endif
-        <form method="post" action="{{ route('jaim.store') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('jaimOld.store') }}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="card-body">
 
