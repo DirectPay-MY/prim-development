@@ -25,7 +25,7 @@
 
                 <a style="margin: 1px;" href=" {{ route('exportteacher') }}" class="btn btn-success"> <i
                         class="fas fa-plus"></i> Export</a>
-                <a style="margin: 19px; float: right;" href="{{ route('jaim.create') }}" class="btn btn-primary"> <i
+                <a style="margin: 19px; float: right;" href="{{ route('jaimOld.create') }}" class="btn btn-primary"> <i
                         class="fas fa-plus"></i> Tambah Pegawai JAIM</a>
             </div>
 

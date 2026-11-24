@@ -95,7 +95,7 @@
 
                 @role('Jaim')
                 <li>
-                    <a href="{{ route('jaim.index') }}" class=" waves-effect">
+                    <a href="{{ route('jaimOld.index') }}" class=" waves-effect">
                         <i class="ti-clipboard"></i>
                         <span>JAIM</span>
                     </a>
